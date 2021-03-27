@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:background="@drawable/background_gradient"
+                android:layout_height="match_parent">
+
+
+       <androidx.cardview.widget.CardView
+               android:id="@+id/c2"
+               app:cardCornerRadius="18dp"
+               app:cardElevation="6dp"
+               android:layout_marginLeft="40dp"
+               android:layout_marginRight="40dp"
+               android:layout_centerInParent="true"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+              <TextView android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Find Postion"
+                        android:drawablePadding="10dp"
+                        android:drawableLeft="@drawable/map"
+                        android:textColor="@android:color/background_dark"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:id="@+id/txtgoogle"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="38sp"
+              android:gravity="center"/>
+       </androidx.cardview.widget.CardView>
+       <androidx.cardview.widget.CardView
+               android:layout_below="@+id/c2"
+               android:layout_width="match_parent"
+               android:layout_height="65dp"
+
+       android:layout_centerInParent="true"
+            android:layout_marginRight="40dp"
+             android:layout_marginLeft="40dp"
+               android:layout_marginBottom="15dp"
+               android:layout_marginTop="15dp"
+              android:id="@+id/c1"
+                    app:cardElevation="8dp"
+                  app:cardCornerRadius="15dp"
+           app:cardBackgroundColor="#F40B5B"
+       >
+              <TextView android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+              android:gravity="center"
+              android:textSize="38sp"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/background_light"
+                        android:shadowColor="@android:color/background_light"
+                        android:textStyle="bold"
+              android:text="Exit Here"/>
+       </androidx.cardview.widget.CardView>
+</RelativeLayout>

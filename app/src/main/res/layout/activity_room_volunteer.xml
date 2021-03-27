@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:background="@drawable/background_gradient"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <com.wonderkiln.camerakit.CameraView android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/camera"/>
+    <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
+            android:id="@+id/cancel"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_speed="1.5"
+            app:lottie_rawRes="@raw/cancel"
+            android:layout_marginLeft="55dp"/>
+    <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
+            android:id="@+id/apcept"
+            android:layout_marginRight="55dp"
+            android:layout_alignParentRight="true"
+            app:lottie_rawRes="@raw/callvideo"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_speed="1.5"
+
+            android:layout_marginLeft="55dp"/>
+
+
+
+
+
+</RelativeLayout>

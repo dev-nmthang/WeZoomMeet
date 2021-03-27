@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+       <ImageView android:layout_width="130dp"
+                  android:layout_gravity="center"
+                  android:src="@drawable/profile_image"
+                  android:layout_height="130dp"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:text="PROFILE"
+              android:layout_marginLeft="15dp"
+              android:textSize="22sp"
+    android:textColor="#3F51B5"/>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:padding="7dp"
+              android:text="thaistyle1998@gmail.com"
+              android:id="@+id/txtemail"
+              android:textSize="16sp"
+              android:textColor="#6175E3"
+     android:background="#ECECE4"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="30dp"/>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:layout_marginTop="8dp"
+              android:padding="7dp"
+              android:text="Change PassWord"
+              android:id="@+id/txtchange"
+              android:textSize="16sp"
+              android:textColor="#6175E3"
+              android:background="#ECECE4"
+              android:layout_marginLeft="15dp"
+              android:layout_marginRight="30dp"/>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:layout_marginTop="50dp"
+              android:padding="7dp"
+
+              android:text="Rate WeSee"
+              android:id="@+id/txtrate"
+              android:textSize="16sp"
+              android:textColor="#6175E3"
+              android:background="#ECECE4"
+              android:layout_marginLeft="15dp"
+              android:layout_marginRight="30dp"/>
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:layout_marginTop="8dp"
+              android:padding="7dp"
+              android:text="Share WeeSee"
+              android:id="@+id/txtshare"
+              android:textSize="16sp"
+              android:textColor="#6175E3"
+              android:background="#ECECE4"
+              android:layout_marginLeft="15dp"
+              android:layout_marginRight="30dp"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:text="Version 4.1.1"
+              android:padding="7dp"
+              android:textSize="18sp"
+    android:layout_gravity="center"
+              android:textColor="#5B6FDC"
+    android:layout_marginTop="80dp"/>
+    <Button android:layout_width="200dp" android:layout_height="60dp"
+    android:layout_gravity="center"
+    android:layout_marginTop="30dp"
+            android:textSize="18sp"
+            android:id="@+id/btnlogout"
+            android:textAllCaps="false"
+            android:textColor="@android:color/background_light"
+    android:text="Log Out"
+    android:background="@drawable/buttonok"/>
+</LinearLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        android:background="@android:color/background_light"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+     <ImageView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+     android:src="@drawable/bg1"/>
+     <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+     android:src="@drawable/wesee"
+                android:id="@+id/txtlogo"
+                android:layout_centerInParent="true"
+     />
+    <TextView android:layout_width="wrap_content"
+              android:layout_below="@+id/txtlogo"
+              android:layout_centerHorizontal="true"
+              android:textSize="27sp"
+              android:text="WE SEE"
+              android:shadowColor="@android:color/background_light"
+              android:shadowRadius="1"
+              android:shadowDx="-1"
+
+              android:layout_height="wrap_content"
+    android:textColor="@android:color/background_light"/>
+
+</RelativeLayout>

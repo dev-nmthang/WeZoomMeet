@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+          package="com.thang.wesee">
+<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-feature android:name="android.hardware.camera"
+                  android:required="true" />
+
+    <application
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:usesCleartextTraffic="true"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            tools:targetApi="m"
+            android:theme="@style/AppTheme">
+        <activity android:name="com.thang.wesee.View.Activity.GoogleActivity"
+        android:screenOrientation="portrait"/>
+        <activity android:name="com.thang.wesee.View.Activity.InComingCallActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.thang.wesee.View.Activity.SupportPersionActivity"
+        android:screenOrientation="portrait"/>
+        <activity android:name="com.thang.wesee.View.Activity.LoginActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.thang.wesee.View.Activity.SignUpActivity"
+        android:screenOrientation="portrait"/>
+        <activity android:name="com.thang.wesee.View.Activity.HomeActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.thang.wesee.View.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+
+        <service
+                android:name="com.thang.wesee.FCM.MessagingService"
+                android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name="com.thang.wesee.View.Activity.OutGoingCallActivity"
+                  android:screenOrientation="portrait"/>
+      <activity android:name="com.thang.wesee.View.Activity.VideoCallActivity"
+      android:screenOrientation="portrait"/>
+        <activity android:name="com.thang.wesee.View.Activity.WaitingActivity"
+        android:screenOrientation="portrait"/>
+        <activity android:name="com.thang.wesee.View.Activity.ChangePassActivity"
+        android:screenOrientation="portrait"/>
+        <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="@string/API_MAP_KEY"/>
+        <activity android:name="com.thang.wesee.Map.MapActivity"
+        android:screenOrientation="portrait"/>
+    </application>
+
+</manifest>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+           <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+           android:src="@drawable/content"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="vertical"
+                  android:layout_alignParentBottom="true"
+                  android:layout_height="wrap_content">
+        <Button android:layout_width="match_parent"
+                android:background="@drawable/buttonok"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:textColor="@android:color/background_light"
+                android:shadowColor="@android:color/background_light"
+                android:layout_alignParentBottom="true"
+                   android:textSize="17sp"
+                android:textAllCaps="false"
+                android:id="@+id/btndiasabled"
+                android:text="Blind &amp; Low-vision People"
+                android:layout_height="60dp"/>
+        <Button android:layout_width="match_parent"
+                android:background="@drawable/buttonok"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="70dp"
+                android:textAllCaps="false"
+                android:textSize="17sp"
+                android:textColor="@android:color/background_light"
+                android:shadowColor="@android:color/background_light"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/btnvolunteer"
+                android:layout_below="@+id/btnvolunteer"
+                android:layout_marginBottom="25dp"
+                android:text="Volunteers"
+                android:layout_height="60dp"/>
+    </LinearLayout>
+</RelativeLayout>
