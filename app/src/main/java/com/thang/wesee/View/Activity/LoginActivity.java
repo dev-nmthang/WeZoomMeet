@@ -1,5 +1,6 @@
 package com.thang.wesee.View.Activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ implements  View.OnClickListener {
     private SharedPreferences.Editor editor;
     private TextView txtsignup;
     private UserController userController;
+    private Dialog dialog;
 
 
     @Override
@@ -67,7 +69,11 @@ implements  View.OnClickListener {
             case R.id.btnlogin:
                 String Email=editemail.getText().toString().trim();
                 String Pass=editpass.getText().toString().trim();
-                userController.HandleLoginAccount(Email,Pass);break;
+                dialog=new Dialog(this);
+                dialog.setContentView(R.layout.dialog_loading);
+                dialog.show();
+                dialog.setCanceledOnTouchOutside(false);
+                userController.HandleLoginAccount(Email,Pass,dialog);break;
             case R.id.txtsignup:
                 startActivity(new Intent(this,SignUpActivity.class));break;
 

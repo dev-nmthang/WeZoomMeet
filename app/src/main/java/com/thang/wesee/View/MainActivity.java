@@ -22,11 +22,11 @@ private UserController userController;
                 if(FirebaseAuth.getInstance().getCurrentUser()!=null){
                     if(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
                         userController.HandleAutologin();
-                        finish();
+
                     }
                 }else{
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    finish();
+
                 }
 
 

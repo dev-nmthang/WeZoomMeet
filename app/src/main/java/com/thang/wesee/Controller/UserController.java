@@ -1,8 +1,10 @@
 package com.thang.wesee.Controller;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,6 +23,7 @@ public class UserController  implements UserView {
 
     private Context context;
     private FirebaseAuth firebaseAuth;
+    private Dialog dialog;
 
     public  UserController(Context context){
         this.context=context;
@@ -31,12 +34,11 @@ public class UserController  implements UserView {
         userModel.CreateAccount(Email,pass,pass1);
 
     }
-    public  void HandleLoginAccount(String Email,String Pass){
+    public  void HandleLoginAccount(String Email, String Pass, Dialog dialog){
+        this.dialog=dialog;
         userModel.HandleLoginAccount(Email,Pass);
     }
-    public  void HandleCreateZoom(String name,String date){
-        userModel.HandleCreateRoom(name,date);
-    }
+
     public void HandleAutologin(){
 
         if(firebaseAuth.getCurrentUser()!=null)
@@ -47,33 +49,27 @@ public class UserController  implements UserView {
 
         }
     }
-    public  void SaveInfo(Context context){
-        userModel.SaveInFo(context);
+    public  void SaveInfo(Context context,String token){
+        userModel.SaveInFo(context,token);
     }
-    public  void UpdateFCMTOKEN(Context context,String token){
-        userModel.SendUpdateFCM(context,token);
-    }
+
     public  void HandleChangePass(String pass){
         userModel.HandleSavePass(pass);
     }
     public  void  UpdateTokenLogOut(String email){
         userModel.UpdateToKenLogout(context);
     }
-    public  void UpdateCall(String type,String email){
-        userModel.UpdateCall(type,email);
+    public  void UpdateCall(String call){
+        userModel.UpdateCall(call);
     }
-    public  void UpdateTypePersion(Context context,String type){
-        userModel.UpdateTypePerson(context,type);
-    }
-
-    public  void HandleUpdateStatus(String room,String status){
-        userModel.HandleUpdateStatus(room,status);
+    public  void HandleUpdateTypePerson(String type){
+        userModel.HandleUpdateTypePerson(type);
     }
 
 
-    public void getDataListRoom(Context context){
-        userModel.getDataListRoom(context);
-    }
+
+
+
 
 
 
@@ -115,7 +111,10 @@ public class UserController  implements UserView {
 
     @Override
     public void OnSucess() {
-        userModel.getDataType(firebaseAuth.getCurrentUser().getEmail());
+       if(dialog!=null){
+           dialog.cancel();
+       }
+        userModel.getDataType();
     }
 
     @Override
@@ -130,14 +129,11 @@ public class UserController  implements UserView {
 
     @Override
     public void getDataType(String type) {
-        if(type!=null){
-            switch (type){
-                case "VOLUNTEER": intent=new Intent(context, WaitingActivity.class);break;
-                case "DISABLE": intent=new Intent(context, SupportPersionActivity.class);break;
-            }
 
-        }else{
-            intent=new Intent(context,HomeActivity.class);
+        switch (type){
+            case "VOLUNTEER": intent=new Intent(context, WaitingActivity.class);break;
+            case "DISABLE": intent=new Intent(context, SupportPersionActivity.class);break;
+            case "NONE": intent=new Intent(context, HomeActivity.class);break;
         }
         context.startActivity(intent);
     }
@@ -152,5 +148,10 @@ public class UserController  implements UserView {
     @Override
     public void OnSucessPass() {
         Toast.makeText(context, "Save Sucess", Toast.LENGTH_SHORT).show();
+    }
+
+    public void HandleUpdateStatus(String room, String cancle) {
+        userModel.HandleUpdateRoom(room,cancle);
+
     }
 }

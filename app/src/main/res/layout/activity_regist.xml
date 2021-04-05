@@ -1,74 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:background="#465BD1"
+                android:background="#385A97"
                 android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView android:layout_width="120dp"
-               android:layout_height="120dp"
-               android:id="@+id/logologin"
-               android:layout_marginTop="40dp"
-               android:layout_centerHorizontal="true"
-               android:src="@drawable/logo_login"/>
 
-    <ImageView android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginLeft="50dp"
-               android:id="@+id/see"
-               android:layout_below="@+id/logologin"
-               android:layout_marginRight="50dp"
-               android:layout_centerHorizontal="true"
-               android:src="@drawable/see"/>
-    <ImageView android:layout_width="32dp" android:layout_height="32dp"
+
+
+    <ImageView android:layout_width="24dp" android:layout_height="24dp"
                android:id="@+id/back"
                android:layout_marginTop="5dp"
                android:layout_marginLeft="5dp"
     android:src="@drawable/back"/>
     <EditText
+        android:singleLine="true"
+        android:maxLines="1"
             android:paddingLeft="15dp"
             android:layout_marginRight="50dp"
             android:layout_marginLeft="50dp"
             android:textColorHint="@android:color/background_light"
             android:hint="Email"
-            android:layout_below="@+id/see"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:textSize="16sp"
+
             android:background="@drawable/background_edittext"
-            android:textColor="@android:color/background_dark"
-            android:shadowColor="@android:color/background_dark"
+            android:textColor="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
             android:id="@+id/editemail"
     />
     <EditText
             android:background="@drawable/background_edittext"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
+        android:singleLine="true"
+        android:maxLines="1"
             android:textColorHint="@android:color/background_light"
             android:hint="PassWord"
             android:paddingLeft="15dp"
+        android:layout_marginTop="8dp"
             android:layout_below="@+id/editemail"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:textSize="16sp"
             android:inputType="textPassword"
-            android:textColor="@android:color/background_dark"
-            android:shadowColor="@android:color/background_dark"
+            android:textColor="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
             android:id="@+id/edtipass"
     />
     <EditText
             android:background="@drawable/background_edittext"
             android:layout_marginLeft="50dp"
+        android:singleLine="true"
+        android:maxLines="1"
             android:layout_marginRight="50dp"
             android:textColorHint="@android:color/background_light"
             android:hint="Enter PassWord"
             android:paddingLeft="15dp"
+        android:layout_marginTop="8dp"
             android:layout_below="@+id/edtipass"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:textSize="16sp"
             android:inputType="textPassword"
-            android:textColor="@android:color/background_dark"
-            android:shadowColor="@android:color/background_dark"
+            android:textColor="@android:color/background_light"
+            android:shadowColor="@android:color/background_light"
             android:id="@+id/edtipass1"
     />
     <Button
@@ -85,7 +83,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="50dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_below="@+id/edtipass1"/>
 
 

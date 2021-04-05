@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.*;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -31,7 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OutGoingCallActivity  extends AppCompatActivity
-         {
+{
     private String invitetoken;
     private APIServices apiServices;
     private LottieAnimationView Imagecall;
@@ -50,26 +51,29 @@ public class OutGoingCallActivity  extends AppCompatActivity
         Imagecall=findViewById(R.id.cancel);
         cameraView=findViewById(R.id.camera);
 
-       if(Build.VERSION.SDK_INT>=23){
-           if(checkSelfPermission(Manifest.permission.CAMERA)
-                   != PackageManager.PERMISSION_GRANTED){
-               requestPermissions(new String[]{Manifest.permission.CAMERA},999);
-           }else {
-                   CameraViews();
-           }
-       }else{
+        if(Build.VERSION.SDK_INT>=23){
+            if(checkSelfPermission(Manifest.permission.CAMERA)
+                    != PackageManager.PERMISSION_GRANTED){
+                requestPermissions(new String[]{Manifest.permission.CAMERA},999);
+            }else {
+                CameraViews();
+            }
+        }else{
 
-       }
+        }
         Intent intent=getIntent();
         LocalBroadcastManager.getInstance(this).registerReceiver(getMessage,new IntentFilter("RESPONSIVE"));
         userController=new UserController(this);
         userModel= (UserModel) intent.getSerializableExtra("User");
+
         apiServices=API.getCilient().create(APIServices.class);
+
         preFerenceManager=new PreFerenceManager(this);
+
         Room= "ROOM"+ FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String email=FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
         Data data=new Data("Calling","Invite",preFerenceManager.getToken(),Room,preFerenceManager.getLa(),
-                preFerenceManager.getLo(),email);
+                preFerenceManager.getLo());
         Notification notification=new Notification(data,userModel.getFCM_TOKEN());
         apiServices.sendRemoteMesage(notification)
                 .enqueue(new Callback<String>() {
@@ -113,14 +117,13 @@ public class OutGoingCallActivity  extends AppCompatActivity
 
     }
 
-             private void CameraViews() {
+    private void CameraViews() {
         cameraView.start();
 
-             }
+    }
 
-             private  void CancleCall(){
-        Data data=new Data("RESPONSIVE","CANCLE",preFerenceManager.getToken(),Room,"1","2",
-                FirebaseAuth.getInstance().getCurrentUser().getEmail());
+    private  void CancleCall(){
+        Data data=new Data("RESPONSIVE","CANCLE",preFerenceManager.getToken(),Room,"1","2");
         Notification notification=new Notification(data,userModel.getFCM_TOKEN());
         apiServices=API.getCilient().create(APIServices.class);
         apiServices.sendRemoteMesage(notification).enqueue(new Callback<String>() {
@@ -134,7 +137,8 @@ public class OutGoingCallActivity  extends AppCompatActivity
 
             }
         });
-        userController.UpdateCall("ACTIVE",FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        startActivity(new Intent(this,SupportPersionActivity.class));
+        userController.UpdateCall("ACTIVE");
 
         finish();
     }
@@ -142,6 +146,8 @@ public class OutGoingCallActivity  extends AppCompatActivity
         @Override
         public void onReceive(Context context, Intent intent) {
             String res=intent.getStringExtra("RESPONSIVE");
+
+
             if(res.equalsIgnoreCase("Cancel")){
                 if(mediaPlayer.isPlaying()){
                     mediaPlayer.stop();
@@ -152,6 +158,8 @@ public class OutGoingCallActivity  extends AppCompatActivity
                 intent1 = new Intent(OutGoingCallActivity.this, VideoCallActivity.class);
                 intent1.putExtra("ROOM", Room);
                 intent1.putExtra("VIDEO", "O");
+                intent1.putExtra("TOKEN", userModel.getFCM_TOKEN());
+
                 cameraView.stop();
                 if(mediaPlayer.isPlaying()){
                     mediaPlayer.stop();

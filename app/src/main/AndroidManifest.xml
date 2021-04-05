@@ -9,15 +9,18 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-feature android:name="android.hardware.camera"
                   android:required="true" />
 
     <application
+
             android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/wesee"
             android:label="@string/app_name"
+            android:launchMode="singleTop"
             android:usesCleartextTraffic="true"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@drawable/wesee"
             android:supportsRtl="true"
             tools:targetApi="m"
             android:theme="@style/AppTheme">
@@ -43,6 +46,7 @@
 
 
         <service
+
                 android:name="com.thang.wesee.FCM.MessagingService"
                 android:exported="false">
             <intent-filter>

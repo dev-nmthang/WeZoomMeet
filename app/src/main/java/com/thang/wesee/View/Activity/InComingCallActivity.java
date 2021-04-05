@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -43,7 +44,7 @@ public class InComingCallActivity extends AppCompatActivity
     private APIServices apiServices;
     private String Room;
     private UserController userController;
-    private String lo,la,email;
+    private String lo,la,email,uid;
     private PreFerenceManager preFerenceManager;
     private MediaPlayer mediaPlayer;
     private CameraView cameraView;
@@ -89,7 +90,7 @@ public class InComingCallActivity extends AppCompatActivity
         ImageAceept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Data data=new Data("RESPONSIVE","Acept",preFerenceManager.getToken(),Room,la,lo,FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                Data data=new Data("RESPONSIVE","Acept",preFerenceManager.getToken(),Room,la,lo);
                 Notification notification=new Notification(data,token);
                 apiServices=API.getCilient().create(APIServices.class);
                 apiServices.sendRemoteMesage(notification).enqueue(new Callback<String>() {
@@ -109,7 +110,7 @@ public class InComingCallActivity extends AppCompatActivity
                 intent.putExtra("ROOM",Room);
                 intent.putExtra("VIDEO","K");
                 intent.putExtra("TOKEN",token);
-                userController.UpdateCall("BUSY",FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                userController.UpdateCall("BUSY");
                 startActivity(intent);
                 if(mediaPlayer.isPlaying()){
                     mediaPlayer.stop();
@@ -124,7 +125,7 @@ public class InComingCallActivity extends AppCompatActivity
         });
     }
     private  void CancleCall(){
-        Data data=new Data("RESPONSIVE","CANCLE",preFerenceManager.getToken(),Room,la,lo,email);
+        Data data=new Data("RESPONSIVE","CANCLE",preFerenceManager.getToken(),Room,preFerenceManager.getLa(),preFerenceManager.getLo());
         Notification notification=new Notification(data,token);
         apiServices=API.getCilient().create(APIServices.class);
         apiServices.sendRemoteMesage(notification).enqueue(new Callback<String>() {
@@ -140,7 +141,7 @@ public class InComingCallActivity extends AppCompatActivity
             }
         });
         cameraView.stop();
-        userController.UpdateCall("ACTIVE",FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        userController.UpdateCall("active");
         finish();
     }
 
@@ -156,7 +157,9 @@ public class InComingCallActivity extends AppCompatActivity
         Room=intent.getStringExtra("ROOM");
         lo=intent.getStringExtra("LO");
         la=intent.getStringExtra("LA");
+        uid=intent.getStringExtra("uid");
         preFerenceManager.PutXAndY(lo,la);
+
 
        // Toast.makeText(this, " "+token, Toast.LENGTH_SHORT).show();
 
@@ -170,6 +173,7 @@ public class InComingCallActivity extends AppCompatActivity
                 if(mediaPlayer.isPlaying()){
                     mediaPlayer.stop();
                 }
+                userController.UpdateCall("active");
                 cameraView.stop();
                 finish();
             }
@@ -206,6 +210,9 @@ public class InComingCallActivity extends AppCompatActivity
         super.onStop();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(getMessage);
     }
-// OK.. call di e
 
+    @Override
+    public void onBackPressed() {
+
+    }
 }

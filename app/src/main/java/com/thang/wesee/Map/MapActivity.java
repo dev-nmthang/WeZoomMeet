@@ -27,7 +27,7 @@ implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        Toast.makeText(getApplicationContext(), ""+preFerenceManager.getLa()+"-"+preFerenceManager.getLo(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), ""+preFerenceManager.getLo()+"-"+preFerenceManager.getLa(), Toast.LENGTH_SHORT).show();
     if(preFerenceManager.getLa().length()>5 && preFerenceManager.getLo().length()>5){
         la=Double.parseDouble(preFerenceManager.getLa().trim());
         lo=Double.parseDouble(preFerenceManager.getLo().trim());
@@ -39,13 +39,17 @@ implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map=googleMap;
-        LatLng latLng=new LatLng(lo,la);
+       if(lo==15 && la==20){
+           Toast.makeText(this, "Người dùng không chia sẻ vị trí", Toast.LENGTH_SHORT).show();
+       }else{
+           LatLng latLng=new LatLng(la,lo);
+           map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,25));
+           map.addMarker(new MarkerOptions()
+                   .title("Person")
+                   .snippet("This is person need to help")
+                   .position(latLng));
+       }
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,17));
-        map.addMarker(new MarkerOptions()
-                .title("Person")
-                .snippet("This is person need to help")
-                .position(latLng));
 
     }
 

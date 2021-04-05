@@ -7,17 +7,19 @@ public class Data {
     private String room;
     private String la;
     private String lo;
-    private String email;
 
 
-    public  Data(String title,String message,String token,String room,String la,String lo,String email){
+
+
+    public  Data(String title,String message,String token,String room,String la,String lo){
         this.title=title;
         this.message=message;
         this.token=token;
         this.room=room;
         this.la=la;
         this.lo=lo;
-        this.email=email;
+
+
     }
 
     public String getTitle() {
@@ -44,7 +46,5 @@ public class Data {
         return room;
     }
 
-    public String getEmail() {
-        return email;
-    }
+
 }

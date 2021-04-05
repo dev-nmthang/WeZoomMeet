@@ -4,9 +4,12 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -55,37 +58,21 @@ public class HomeActivity  extends AppCompatActivity
         preFerenceManager=new PreFerenceManager(this);
         GetLocation();
         userController=new UserController(this);
-        userController.SaveInfo(this);
+        preFerenceManager=new PreFerenceManager(this);
 
-        preFerenceManager=new PreFerenceManager(HomeActivity.this);
 
-        userController=new UserController(HomeActivity.this);
-        userController.SaveInfo(HomeActivity.this);
+
+
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<String> task) {
-                if(task.isSuccessful()){
-                    if(preFerenceManager.getToken().equalsIgnoreCase(task.getResult())){
-
-                    }else{
-                        preFerenceManager.putKeyToken(task.getResult());
-                        Toast.makeText(HomeActivity.this,preFerenceManager.getToken(),Toast.LENGTH_LONG).show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                userController.UpdateFCMTOKEN(HomeActivity.this,preFerenceManager.getToken());
-
-                            }
-                        },1000);
-                    }
-                }
+                preFerenceManager.putKeyToken(task.getResult());
+                userController.SaveInfo(HomeActivity.this,task.getResult());
             }
         });
 
 
     }
-
-
 
     private void InitWidget() {
         btnvolunteer=findViewById(R.id.btnvolunteer);
@@ -97,10 +84,10 @@ public class HomeActivity  extends AppCompatActivity
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnvolunteer:
-                userController.UpdateTypePersion(this,"VOLUNTEER");
+                userController.HandleUpdateTypePerson("VOLUNTEER");
                 startActivity(new Intent(HomeActivity.this, WaitingActivity.class));break;
             case R.id.btndiasabled: startActivity(new Intent(HomeActivity.this,SupportPersionActivity.class));
-                 userController.UpdateTypePersion(this,"DISABLE");
+                 userController.HandleUpdateTypePerson("DISABLE");
                 break;
         }
     }
@@ -126,10 +113,9 @@ public class HomeActivity  extends AppCompatActivity
             }
         }.start();
 
-
-
-
     }
+
+
     private void getsLastPositon() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -161,5 +147,6 @@ public class HomeActivity  extends AppCompatActivity
                 == PackageManager.PERMISSION_GRANTED;
         return  resultlocation;
     }
+
 
 }

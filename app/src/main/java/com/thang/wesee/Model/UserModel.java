@@ -9,8 +9,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.*;
 import com.thang.wesee.Config.PreFerenceManager;
 import com.thang.wesee.Controller.Interface.UserView;
@@ -27,12 +30,12 @@ public class UserModel implements Serializable {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private String FCM_TOKEN;
-    private FirebaseFirestore db;
     private PreFerenceManager preFerenceManager;
-    private String call;
-    private String type;
-    private FirebaseDatabase firebaseDatabase;
+    private String CALL;
+    private String TYPE;
     private DatabaseReference databaseReference;
+    private FirebaseDatabase firebaseDatabase;
+
 
 
     private UserView callback;
@@ -43,16 +46,16 @@ public class UserModel implements Serializable {
         firebaseDatabase=FirebaseDatabase.getInstance("https://zoommeeting-3f76b-default-rtdb.firebaseio.com/");
         databaseReference=firebaseDatabase.getReference();
         firebaseUser=firebaseAuth.getCurrentUser();
-        db=FirebaseFirestore.getInstance();
+
 
     }
 
-    public UserModel(String email, String DATE, String FCM_TOKEN,String call,String type) {
-        Email = email;
+    public UserModel(String Email,String DATE, String FCM_TOKEN,String CALL,String TYPE) {
+        this.Email=Email;
         this.DATE = DATE;
         this.FCM_TOKEN = FCM_TOKEN;
-        this.call=call;
-        this.type=type;
+        this.CALL=CALL;
+        this.TYPE=TYPE;
     }
 
     public UserModel() {
@@ -108,31 +111,10 @@ public class UserModel implements Serializable {
         }
     }
 
-    public  void HandleCreateRoom(String name,String date){
-        RoomModel roomModel=new RoomModel(name,date);
-        db.collection("ROOM")
-                .add(roomModel).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
-                if(task.isSuccessful()){
-                    callback.OnSucessRoom();
-                }else{
-                    callback.OnFail();
-                }
-            }
-        });
-    }
-
-    public void   getDataListRoom(Context context){
 
 
 
 
-    }
-    public  void SendFCM(Context context){
-
-        SendUpdateFCM(context,preFerenceManager.getToken());
-    }
 
     public  void UpdateUser(){
         Calendar calendar=Calendar.getInstance();
@@ -140,116 +122,57 @@ public class UserModel implements Serializable {
         String date=simpleDateFormat.format(calendar.getTime());
         HashMap<String,String> User=new HashMap<>();
         User.put("DATE",date);
-        User.put("Email",firebaseAuth.getCurrentUser().getEmail());
-        User.put("call","Active");//
+        User.put("EMAIL",firebaseAuth.getCurrentUser().getEmail());
+        User.put("CALL","Active");
+        User.put("TYPE","NONE");
+        User.put("FCM_TOKEN","NONE");
+        databaseReference.child("User")
+                .child(firebaseAuth.getCurrentUser().getUid())
+                .setValue(User);
 
-        db.collection("User")
-                .add(User).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
 
-            }
-        });
     }
-    public void SaveInFo(Context context){
+    public void SaveInFo(Context context,String token){
         preFerenceManager=new PreFerenceManager(context);
-        db.collection("User")
-                .whereEqualTo("Email",firebaseUser.getEmail())
-                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                DocumentSnapshot documentSnapshot=queryDocumentSnapshots.getDocuments().get(0);
-
-                if(preFerenceManager.getID().equalsIgnoreCase(documentSnapshot.getId())){
-
-                }else{
-                    preFerenceManager.putKeyValue(documentSnapshot.getId());
-                }
-
-            }
-        });
-    }
-    public  void  getDataType(String email){
-        db.collection("User")
-                .whereEqualTo("Email",email)
-                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for(DocumentSnapshot d :queryDocumentSnapshots){
-                    callback.getDataType(d.getString("TYPE"));
-                }
-            }
-        });
-    }
-    public  void UpdateCall(String type,String email){
-        db.collection("User")
-                .whereEqualTo("Email",email)
-                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                DocumentSnapshot documentSnapshot=queryDocumentSnapshots.getDocuments().get(0);
-                SaveType(documentSnapshot.getId(),type);
-            }
-        });
+        databaseReference.child("User")
+                .child(firebaseAuth.getCurrentUser().getUid())
+                .child("FCM_TOKEN")
+                .setValue(token);
     }
 
-    private void SaveType(String id,String type) {
-        db.collection("User").document(id)
-                .update("call",type)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<Void> task) {
-
-                    }
-                });
+    public  void UpdateCall(String call){
+        databaseReference.child("User")
+                .child(firebaseAuth.getCurrentUser().getUid())
+                .child("CALL").setValue(call);
+    }
+    public  void HandleUpdateTypePerson(String type){
+        databaseReference.child("User")
+                .child(firebaseAuth.getCurrentUser().getUid())
+                .child("TYPE").setValue(type);
+    }
+    public  void HandleUpdateRoom(String room,String satus)
+    {
+        databaseReference.child(room).setValue(satus);
     }
 
 
-    public  void SendUpdateFCM(Context context,String token){
-        preFerenceManager=new PreFerenceManager(context);
-        db.collection("User").document(preFerenceManager.getID())
-                .update("FCM_TOKEN",token)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<Void> task) {
 
-                    }
-                });
-    }
+
     public  void UpdateToKenLogout(Context context){
         preFerenceManager=new PreFerenceManager(context);
-        db.collection("User").document(preFerenceManager.getID())
-                .update("FCM_TOKEN","")
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-
-                    }
-                });
-    }
-    public  void UpdateTypePerson(Context context,String Type){
-        preFerenceManager=new PreFerenceManager(context);
-        db.collection("User").document(preFerenceManager.getID())
-                .update("TYPE",Type)
-
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-
-                    }
-                });
+        databaseReference.child("User")
+                .child(firebaseAuth.getCurrentUser().getUid())
+                .child("FCM_TOKEN").setValue("");
     }
 
-    public  void HandleUpdateStatus(String room,String status){
-        databaseReference.child(room).setValue(status) ;
 
-    }
+
     public  void HandleSavePass(String pass){
         firebaseUser.updatePassword(pass).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<Void> task) {
                 if(task.isSuccessful()){
-                   callback.OnSucessPass();
+                    callback.OnSucessPass();
                 }
             }
         });
@@ -268,14 +191,29 @@ public class UserModel implements Serializable {
         return Email;
     }
 
-    public String getCall() {
-        return call;
+    public String getCALL() {
+        return CALL;
     }
 
+    public String getTYPE() {
+        return TYPE;
+    }
 
+    public void getDataType() {
+        ValueEventListener valueEventListener=new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                callback.getDataType(snapshot.getValue().toString());
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-    public String getType() {
-        return type;
+            }
+        };
+        databaseReference.child("User")
+                .child(firebaseAuth.getCurrentUser().getUid())
+                .child("TYPE").addListenerForSingleValueEvent(valueEventListener);
+
     }
 }

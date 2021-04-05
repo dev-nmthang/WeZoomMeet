@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import com.thang.wesee.Controller.Interface.UserListening;
+
 import com.thang.wesee.Model.UserModel;
 import com.thang.wesee.R;
 
@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class RoomAdapter  extends BaseAdapter {
     private Context context;
     private ArrayList<UserModel> arrayList;
-    private UserListening callback;
 
     public RoomAdapter(Context context, ArrayList<UserModel> arrayList) {
         this.context = context;
